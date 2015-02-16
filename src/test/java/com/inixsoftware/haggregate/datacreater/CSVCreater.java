@@ -16,10 +16,47 @@
 
 package com.inixsoftware.haggregate.datacreater;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class CSVCreater
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws IOException
     {
-        //TODO
+        BufferedWriter bw = new BufferedWriter(new FileWriter("test.csv"));
+        bw.write("fname,lname,age,gender,income,state,zip\n");
+
+        for (int i = 0; i < 10; i++)
+        {
+            StringBuilder str = new StringBuilder();
+
+            str.append(ValueGen.createFirstName());
+            str.append(",");
+
+            str.append(ValueGen.createLastName());
+            str.append(",");
+
+            str.append(ValueGen.createAge());
+            str.append(",");
+
+            str.append(ValueGen.createGender());
+            str.append(",");
+
+            str.append(ValueGen.createIncome());
+            str.append(",");
+
+            str.append(ValueGen.createState());
+            str.append(",");
+
+            str.append(ValueGen.createZipCode());
+
+            bw.write(str.toString());
+            bw.write("\n");
+        }
+
+        bw.flush();
+        bw.close();
+
     }
 }
