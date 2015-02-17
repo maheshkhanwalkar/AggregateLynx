@@ -28,6 +28,8 @@ public class CSVReader
     private String[] headerNames;
     private BufferedReader br;
 
+    private String currentLine;
+
     public CSVReader(File toRead)
     {
         file = toRead;
@@ -57,11 +59,21 @@ public class CSVReader
         }
     }
 
-    public String readLine()
+    public String getCurrentLine()
+    {
+        return currentLine;
+    }
+
+
+    public String[] readLine()
     {
         try
         {
-            return br.readLine();
+            currentLine = br.readLine();
+            if (currentLine != null)
+                return currentLine.split(",");
+
+            return null;
         }
         catch (IOException e)
         {

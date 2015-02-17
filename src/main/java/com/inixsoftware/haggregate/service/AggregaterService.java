@@ -22,26 +22,32 @@ import com.inixsoftware.haggregate.reader.CSVReader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class AggregaterService
 {
     private ArrayList<String> aggregates = new ArrayList<String>();
     private String coreSite, hdfsSite;
 
+    private ArrayList<HashMap<String, Integer>> list = new ArrayList<HashMap<String, Integer>>();
+    private int[] pos;
     /**
      *
      * @param hadoopCoreSite - path to core-site.xml
      * @param hadoopHdfsSite - path to hdfs-site.xml
      */
-    public AggregaterService(String hadoopCoreSite, String hadoopHdfsSite)
+    public AggregaterService(String hadoopCoreSite, String hadoopHdfsSite, String... whatToAggregate)
     {
         coreSite = hadoopCoreSite;
         hdfsSite = hadoopHdfsSite;
-    }
 
-    public void addAggregate(String category)
-    {
-        aggregates.add(category);
+        Collections.addAll(aggregates, whatToAggregate);
+
+        for(String s : aggregates)
+        {
+            list.add(new HashMap<String, Integer>());
+        }
     }
 
     /* Reads file, aggregates against fields in ArrayList<>, writes file to Hadoop */
@@ -51,13 +57,48 @@ public class AggregaterService
         CSVReader reader = new CSVReader(new File(fileName));
         HadoopWriter writer = new HadoopWriter(hadoopURL, coreSite, hdfsSite);
 
-        String line;
+        String[] data;
+        String[] headers = reader.getHeaderNames();
 
-        while ((line = reader.readLine()) != null)
+        pos = new int[headers.length];
+
+        for (int i = 0; i < headers.length; i++)
         {
-            writer.writeLine(line);
+            String h1 = headers[i];
+            int index = aggregates.indexOf(h1);
+
+            pos[i] = index;
         }
 
-        return null;
+        while ((data = reader.readLine()) != null)
+        {
+            for (int i = 0; i < pos.length; i++)
+            {
+                if (pos[i] != -1)
+                {
+                    process(pos[i], data[i]);
+                }
+            }
+
+            writer.writeLine(reader.getCurrentLine());
+        }
+
+        return new AggregationResult(list, aggregates);
+    }
+
+
+    private void process(int loc, String key)
+    {
+        HashMap<String, Integer> map = list.get(loc);
+        Integer value = map.get(key);
+
+        if (value == null)
+        {
+            map.put(key, 1);
+        }
+        else
+        {
+            map.put(key, value + 1);
+        }
     }
 }

@@ -14,13 +14,18 @@
    limitations under the License.
  */
 
+import com.inixsoftware.haggregate.data.AggregationResult;
 import com.inixsoftware.haggregate.service.AggregaterService;
 
 public class CSVCopy
 {
     public static void main(String[] args)
     {
-        AggregaterService service = new AggregaterService("/opt/hadoop-2.6.0/etc/hadoop/core-site.xml", "/opt/hadoop-2.6.0/etc/hadoop/hdfs-site.xml");
-        service.aggregateFile("test.csv", "hdfs://localhost:9000/test.csv");
+        AggregaterService service = new AggregaterService("/opt/hadoop-2.6.0/etc/hadoop/core-site.xml", "/opt/hadoop-2.6.0/etc/hadoop/hdfs-site.xml",
+                "gender", "age", "zip", "state");
+
+        AggregationResult res = service.aggregateFile("test.csv", "hdfs://localhost:9000/test.csv");
+        System.out.println(res);
+
     }
 }

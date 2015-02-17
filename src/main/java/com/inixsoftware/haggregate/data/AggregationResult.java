@@ -16,7 +16,41 @@
 
 package com.inixsoftware.haggregate.data;
 
+import java.util.*;
+
 public class AggregationResult
 {
+   private ArrayList<HashMap<String, Integer>> list;
+   private ArrayList<String> aggregates;
+
+   public AggregationResult(ArrayList<HashMap<String, Integer>> list, ArrayList<String> aggregates)
+   {
+      this.list = list;
+      this.aggregates = aggregates;
+   }
+
+   @Override
+   public String toString()
+   {
+      String result = "";
+
+      for (int i = 0; i < aggregates.size(); i++)
+      {
+         result += aggregates.get(i) + "\n======================================\n";
+
+         HashMap<String, Integer> map = list.get(i);
+         Set<Map.Entry<String, Integer>> entries = map.entrySet();
+
+         for (Map.Entry<String, Integer> entry : entries)
+         {
+            result += entry.getKey() + "   -   " + entry.getValue() + "\n";
+         }
+
+         result += "\n";
+      }
+
+      return result;
+   }
+
    //TODO
 }
