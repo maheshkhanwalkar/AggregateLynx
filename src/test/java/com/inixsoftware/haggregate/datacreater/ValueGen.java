@@ -20,10 +20,10 @@ import java.util.Random;
 
 public class ValueGen
 {
-    private static Random r = new Random();
-    private static String letters = "abcdefghijklmnopqrstuvwxyz";
+    private static final Random r = new Random();
+    private static final String letters = "abcdefghijklmnopqrstuvwxyz";
 
-    private static String[] states = new String[]
+    private static final String[] states = new String[]
     {
             "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
             "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
