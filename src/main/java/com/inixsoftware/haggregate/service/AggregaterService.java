@@ -86,6 +86,17 @@ public class AggregaterService
         return new AggregationResult(list, aggregates);
     }
 
+    public AggregationResult[] aggregateFiles(String[] fileNames, String[] hadoopURLs)
+    {
+        AggregationResult[] results = new AggregationResult[fileNames.length];
+
+        for (int i = 0; i < fileNames.length; i++)
+        {
+            results[i] = aggregateFile(fileNames[i], hadoopURLs[i]);
+        }
+
+        return results;
+    }
 
     private void process(int loc, String key)
     {

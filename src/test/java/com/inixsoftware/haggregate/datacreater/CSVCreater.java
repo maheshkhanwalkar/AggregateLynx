@@ -25,7 +25,10 @@ public class CSVCreater
     public static void main(String[] args) throws IOException
     {
         BufferedWriter bw = new BufferedWriter(new FileWriter("test.csv"));
+        BufferedWriter bw2 = new BufferedWriter(new FileWriter("test2.csv"));
+
         bw.write("fname,lname,age,gender,income,state,zip\n");
+        bw2.write("fname,lname,age,gender,income,state,zip\n");
 
         for (int i = 0; i < 10; i++)
         {
@@ -55,8 +58,39 @@ public class CSVCreater
             bw.write("\n");
         }
 
+        for (int i = 0; i < 10; i++)
+        {
+            StringBuilder str = new StringBuilder();
+
+            str.append(ValueGen.createFirstName());
+            str.append(",");
+
+            str.append(ValueGen.createLastName());
+            str.append(",");
+
+            str.append(ValueGen.createAge());
+            str.append(",");
+
+            str.append(ValueGen.createGender());
+            str.append(",");
+
+            str.append(ValueGen.createIncome());
+            str.append(",");
+
+            str.append(ValueGen.createState());
+            str.append(",");
+
+            str.append(ValueGen.createZipCode());
+
+            bw2.write(str.toString());
+            bw2.write("\n");
+        }
+
         bw.flush();
+        bw2.flush();
+
         bw.close();
+        bw2.close();
 
     }
 }

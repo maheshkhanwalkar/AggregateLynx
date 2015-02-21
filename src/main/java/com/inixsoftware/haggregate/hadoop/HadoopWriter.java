@@ -20,11 +20,14 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class HadoopWriter
 {
+    private Logger logger = Logger.getLogger(HadoopWriter.class);
     private String hadoopURL, coreSite, hdfsSite;
 
     private Configuration config;
@@ -35,6 +38,8 @@ public class HadoopWriter
 
     public HadoopWriter(String url, String coreSite, String hdfsSite)
     {
+        BasicConfigurator.configure();
+
         hadoopURL = url;
         this.coreSite = coreSite;
 

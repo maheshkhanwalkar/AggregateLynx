@@ -22,10 +22,17 @@ public class CSVCopy
     public static void main(String[] args)
     {
         AggregaterService service = new AggregaterService("/opt/hadoop-2.6.0/etc/hadoop/core-site.xml", "/opt/hadoop-2.6.0/etc/hadoop/hdfs-site.xml",
-                "gender", "age", "zip", "state");
+                "gender", "age");
 
-        AggregationResult res = service.aggregateFile("test.csv", "hdfs://localhost:9000/test.csv");
-        System.out.println(res);
+        AggregationResult[] res = service.aggregateFiles(new String[]{"test.csv", "test2.csv"}, new String[]{"hdfs://localhost:9000/test.csv",
+                "hdfs://localhost:9000/test2.csv"});
+
+        for (AggregationResult re : res)
+        {
+            System.out.println("\n\nNEW FILE: \n");
+            System.out.println(re);
+        }
+
 
     }
 }
