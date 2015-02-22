@@ -32,7 +32,7 @@ public class AggregaterService
     private String coreSite, hdfsSite;
 
     private ArrayList<HashMap<String, Integer>> list = new ArrayList<HashMap<String, Integer>>();
-    private int[] pos;
+
     /**
      *
      * @param hadoopCoreSite - path to core-site.xml
@@ -40,14 +40,19 @@ public class AggregaterService
      */
     public AggregaterService(String hadoopCoreSite, String hadoopHdfsSite, String... whatToAggregate)
     {
-        BasicConfigurator.configure();
+     //   BasicConfigurator.configure();
 
         coreSite = hadoopCoreSite;
         hdfsSite = hadoopHdfsSite;
 
         Collections.addAll(aggregates, whatToAggregate);
+    }
 
-        for(String s : aggregates)
+    public void clear()
+    {
+        list = new ArrayList<HashMap<String, Integer>>();
+
+        for (String s: aggregates)
         {
             list.add(new HashMap<String, Integer>());
         }
@@ -57,13 +62,15 @@ public class AggregaterService
 
     public AggregationResult aggregateFile(String fileName, String hadoopURL)
     {
+        clear();
+
         CSVReader reader = new CSVReader(new File(fileName));
         HadoopWriter writer = new HadoopWriter(hadoopURL, coreSite, hdfsSite);
 
-        String[] data;
+        String[] data = null;
         String[] headers = reader.getHeaderNames();
 
-        pos = new int[headers.length];
+        int[] pos = new int[headers.length];
 
         for (int i = 0; i < headers.length; i++)
         {
