@@ -27,7 +27,7 @@ import java.io.IOException;
 
 public class HadoopWriter
 {
-    private Logger logger = Logger.getLogger(HadoopWriter.class);
+    //private Logger logger = Logger.getLogger(HadoopWriter.class);
     private String hadoopURL, coreSite, hdfsSite;
 
     private Configuration config;
