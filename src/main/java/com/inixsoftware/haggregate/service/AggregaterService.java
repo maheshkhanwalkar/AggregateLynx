@@ -31,7 +31,7 @@ public class AggregaterService
     private ArrayList<String> aggregates = new ArrayList<String>();
     private String coreSite, hdfsSite;
 
-    private ArrayList<HashMap<String, Integer>> list = new ArrayList<HashMap<String, Integer>>();
+    private ArrayList<HashMap<String, Integer>> list;// = new ArrayList<HashMap<String, Integer>>();
 
     /**
      *
@@ -93,7 +93,7 @@ public class AggregaterService
             writer.writeLine(reader.getCurrentLine());
         }
 
-        return new AggregationResult(list, aggregates);
+        return new AggregationResult(list, aggregates, fileName);
     }
 
     public AggregationResult[] aggregateFiles(String[] fileNames, String[] hadoopURLs)
