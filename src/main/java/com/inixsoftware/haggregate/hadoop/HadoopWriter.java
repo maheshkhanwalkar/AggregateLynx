@@ -38,8 +38,6 @@ public class HadoopWriter
 
     public HadoopWriter(String url, String coreSite, String hdfsSite)
     {
-        BasicConfigurator.configure();
-
         hadoopURL = url;
         this.coreSite = coreSite;
 

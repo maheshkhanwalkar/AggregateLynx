@@ -19,6 +19,7 @@ package com.inixsoftware.haggregate.service;
 import com.inixsoftware.haggregate.data.AggregationResult;
 import com.inixsoftware.haggregate.hadoop.HadoopWriter;
 import com.inixsoftware.haggregate.reader.CSVReader;
+import org.apache.log4j.BasicConfigurator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class AggregaterService
      */
     public AggregaterService(String hadoopCoreSite, String hadoopHdfsSite, String... whatToAggregate)
     {
+        BasicConfigurator.configure();
+
         coreSite = hadoopCoreSite;
         hdfsSite = hadoopHdfsSite;
 
